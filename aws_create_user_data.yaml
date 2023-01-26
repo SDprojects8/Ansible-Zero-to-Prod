@@ -1,0 +1,26 @@
+    - name: windows - create ec2 instance
+      ec2:
+        key_name: aws-ansible-key
+        instance_type: t2.micro
+        image: ami-0ac51e8ec52326463
+        region: us-east-1
+        group: windows
+        count: 1
+        vpc_subnet_id: "{{ ansible_subnet.subnets[0].id }}"
+        user_data: |
+          <powershell>
+          $content = (Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1' -UseBasicParsing).content
+          iex $content
+          $password = "{{ password }}" | ConvertTo-SecureString -AsPlainText -Force
+          New-LocalUser 'ansible' -Password $password
+          Add-LocalGroupMember -Group 'Administrators' -Member 'ansible'
+          </powershell>
+          <persist>true</persist>
+        wait: yes
+        assign_public_ip: yes
+        instance_tags:
+          Name: winweb01
+          app: ansible
+          env: dev
+          os: windows
+      register: ec2
