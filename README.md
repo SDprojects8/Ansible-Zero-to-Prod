@@ -48,3 +48,75 @@ ansible localhost -m aws_caller_info
 
 ## Ansible with Azure
 
+
+```bash
+az --version
+az login
+```
+
+```powershell
+
+# Replace the <ServicePrincipalName> with a name of your own choice
+az ad sp create-for-rbac --name ServicePrincipleAnsible
+
+
+# Replace the APP_ID with the output appId of the create-for-rbac command. 
+az role assignment create --assignee appID --role Contributor
+
+# Replace the APP_ID with the output appId of the create-for-rbac command. 
+az role assignment list --assignee appID
+
+
+```
+
+
+### Getting Azure information
+
+```bash
+# Azure Subscription Id
+ subscriptionid=$(az account show --query id --output tsv)
+
+# Azure Client Id
+# Replace <appId> with the actual App Id
+clientid=<appId>
+
+# Azure Secret. 
+# Replace <Password> with the auto-generated password for service principal.
+secret=<password>
+
+# Azure Tenant Id
+# Replace <tenant> with the actual tenant Id
+tenantid=<tenant>
+
+export AZURE_SUBSCRIPTION_ID=$subscriptionid; 
+export AZURE_CLIENT_ID=$clientid;
+export AZURE_SECRET=$secret;
+export AZURE_TENANT=$tenantid;
+
+# echo variables and save them for later use.
+echo $AZURE_SUBSCRIPTION_ID
+echo $AZURE_CLIENT_ID
+echo $AZURE_SECRET
+echo $AZURE_TENANT
+```
+
+#### Check Ansible Azure module is installed.
+
+> CAUTION
+>> This may break existing Ansible or/and Azure CLI installations
+
+```bash
+pip3 install ansible[azure]
+```
+
+### Run Ansible for Azure
+
+```bash
+ansible localhost -m azure_rm_resourcegroup -a "name=ansible location=eastus"
+
+#Ansible 2.9 with azure_rm module
+ansible localhost -m azure_rm_resourcegroup -a "name=ansible-test location=eastus"
+
+#Ansible 2.10 with azure.azcollection
+ansible localhost -m azure.azcollection.azure_rm_resourcegroup -a "name=<resource_group_name> location=<location>"
+```

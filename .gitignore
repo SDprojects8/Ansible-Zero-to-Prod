@@ -1,0 +1,14 @@
+tmp*
+TMP*
+*tmp
+*TMP
+temp*
+TEMP*
+*temp
+*TEMP
+tmp/*
+temp/*
+TMP/*
+TEMP/*
+OUTPUT.md
+*.pem
