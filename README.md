@@ -182,3 +182,5 @@ ansible-playbook aws_create_linux_ec2_instance.yaml
 ![Subnets](aws/subnets.jpg)
 
 ![Security Groups](aws/Security_Groups.jpg)
+
+![Ping to all HOSTS OK](aws/PING_OK.jpg)
