@@ -160,3 +160,17 @@ ansible all -i <Public IP Address>, -m win_ping -e "ansible_user=ansible ansible
 
 
 
+## Automated AWS instance spin up
+
+Run the below playbooks to spin up upto 100 VMS:
+
+```bash
+# Supply a random number when prompted
+ansible-playbook aws_create_vpc.yaml
+
+# Supply a pssword and the same random number as above
+ansible-playbook aws_create_linux_ec2_instance.yaml
+```
+
+
+
