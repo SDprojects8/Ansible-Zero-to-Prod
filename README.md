@@ -173,4 +173,12 @@ ansible-playbook aws_create_linux_ec2_instance.yaml
 ```
 
 
+### Checkout these babies
 
+![EC2 Instances](aws/EC2_instances.jpg)
+
+![Virtual Provate Networks](aws/VPCs.jpg)
+
+![Subnets](aws/subnets.jpg)
+
+![Security Groups](aws/Security_Groups.jpg)
