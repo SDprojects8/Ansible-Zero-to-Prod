@@ -4,9 +4,19 @@
   connection: local
 
   tasks: 
+    - pause:
+       prompt: "Enter random number for aws instance "
+       echo: yes
+      when: count is undefined
+      register: count_input
+
+    - set_fact:
+        count: "{{ count_input.user_input }}"
+      when: count is undefined  
+
     - name: create vpc
       ec2_vpc_net:
-        name: ansible
+        name: ansible-{{ count }}
         cidr_block: 10.0.0.0/16
         region: us-east-1
         tags:
@@ -20,11 +30,11 @@
       ec2_vpc_subnet:
         region: us-east-1
         vpc_id: "{{ ansible_vpc.vpc.id }}"
-        cidr: 10.0.1.0/24
+        cidr: 10.0.2.0/24
         map_public: yes
         tags:
-          Name: ansible-subnet
-          app: ansible
+          Name: ansible-subnet-{{ count }}
+          app: ansible-{{ count }}
           env: dev
         state: present
       register: ansible_subnet
@@ -35,8 +45,8 @@
         region: us-east-1
         state: present
         tags:
-          Name: "ansible-igw"
-          app: ansible
+          Name: "ansible-igw-{{ count }}"
+          app: ansible-{{ count }}
           env: dev
       register: igw
 
