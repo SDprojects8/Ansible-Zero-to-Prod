@@ -12,8 +12,8 @@ ansible -vvv localhost -m aws_caller_info
 
 # In case of error, 
 # "_Failed to import the required Python library (botocore or boto3)"
-pip3 install boto3
-pip3 install boto
+# pip3 install boto3
+# pip3 install boto
 
-# re-execute
-ansible -vvv localhost -m aws_caller_info
+# # re-execute
+# ansible -vvv localhost -m aws_caller_info
