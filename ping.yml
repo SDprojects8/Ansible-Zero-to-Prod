@@ -1,0 +1,21 @@
+---
+- hosts: EDUIO
+  gather_facts: false
+
+  vars_prompt:
+    - name: password
+      prompt: "Enter ansible user password"
+
+  vars:
+    ansible_user: ansible
+    ansible_password: "{{ password }}"
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+  tasks:
+  - name: run ping
+    ping:
+
+
+## Replace the <Public Ip Address> with the IP of Azure virtual machine
+## or AWS EC2 instance for Windows
+#ansible-playbook ping.yaml -i <Public Ip Address>,

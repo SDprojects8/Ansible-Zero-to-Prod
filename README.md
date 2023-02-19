@@ -120,3 +120,43 @@ ansible localhost -m azure_rm_resourcegroup -a "name=ansible-test location=eastu
 #Ansible 2.10 with azure.azcollection
 ansible localhost -m azure.azcollection.azure_rm_resourcegroup -a "name=<resource_group_name> location=<location>"
 ```
+
+
+## Connect to instance
+
+```bash
+in10c2 ➜ ~/IN10C2/github/Ansible-Zero-to-Prod (main ✗) $ ansible all -i  xx.xxx.xx.xxx, -m ping -e "ansible_user=ansible ansible_password=Iamroot0 ansible_ssh_common_args='-o StrictHostKeyChecking=no'"
+20.51.164.72 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/libexec/platform-python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+
+### Windows connection modules
+
+```bash
+# Replace the <Public Ip Address> with the actual
+# Linux Instance or VM IP Address
+ansible all -i <Public Ip Address>, -m ping
+
+# Disable Host Key Checking
+# Replace the <Public Ip Address> with the actual 
+# Linux instance or VM IP Address
+ansible all -i <Public Ip Address>, -m ping -e "ansible_ssh_common_args='-o StrictHostKeyChecking=no'"
+
+# Replace the <Public Ip Address> with the actual 
+# Linux instance or VM IP Address and 
+# <Password> with your actual password
+ansible all -i <Public Ip Address>, -m ping -e "ansible_user=ansible ansible_password=<Password> ansible_ssh_common_args='-o StrictHostKeyChecking=no'"
+
+# Replace <Password> with your Actual Password
+# Replace <Public IP Address> with Windows Host IP Address
+ansible all -i <Public IP Address>, -m win_ping -e "ansible_user=ansible ansible_password=<Password> ansible_winrm_server_cert_validation=ignore ansible_connection=winrm"
+```
+
+
+
